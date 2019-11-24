@@ -4,6 +4,7 @@ import {MatButtonModule, MatDialogModule, MatListModule, MatProgressBarModule} f
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {UploadService} from "./upload.service";
 
 @NgModule({
   declarations: [UploadComponent],
@@ -17,6 +18,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserAnimationsModule,
     MatProgressBarModule
   ],
+  providers: [UploadService],
   exports: [UploadComponent]
 })
 export class UploadModule { }
