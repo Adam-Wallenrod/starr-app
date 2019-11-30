@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef} from "@angular/material";
 import {UploadService} from "../upload.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-dialog',
@@ -12,8 +13,8 @@ export class DialogComponent implements OnInit {
   @ViewChild('file') file
   public files: Set<File> = new Set();
 
-  progress: number;
-  caneBeClosed: boolean = true;
+  progress;
+  canBeClosed: boolean = true;
   primaryButtonText: string = 'Upload';
   showCancelButton: boolean = true;
   uploading: boolean = false;
@@ -38,6 +39,54 @@ export class DialogComponent implements OnInit {
         this.files.add(files[key]);
       }
     }
+  }
+
+  closeDialog() {
+    // if everything was uploaded already, just close the dialog
+    if(this.uploadSuccessful) {
+      return this.dialogRef.close();
+    }
+
+
+    // set the component state to "uploading"
+    this.uploading = true;
+
+    // start the upload and save the progress map
+    this.progress = this.uploadService.upload(this.files);
+
+    // convert the progress map into an array
+    let allProgressObservables = [];
+    for(let key in this.progress){
+      allProgressObservables.push(this.progress[key].progress);
+    }
+
+    // Adjust the state variables
+
+    // The Ok-button should have the text "Finish" now
+    this.primaryButtonText = 'Finish';
+
+    // the dialog should not be closed while uploading
+    this.canBeClosed = false;
+    this.dialogRef.disableClose = true;
+
+    // hide the cancel-button
+    this.showCancelButton = false;
+
+    // when all progress-observables are completed...
+    forkJoin(allProgressObservables).subscribe( end => {
+      // ... the dialog can be closed again...
+      this.canBeClosed = true;
+      this.dialogRef.disableClose = false;
+
+      // ... the upload was successful...
+      this.uploadSuccessful = true;
+
+      // ... and the component is no longer uploading
+      this.uploading = false;
+
+
+    });
+
   }
 
 }

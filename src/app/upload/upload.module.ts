@@ -20,7 +20,9 @@ import {UploadService} from "./upload.service";
     BrowserAnimationsModule,
     MatProgressBarModule
   ],
+  entryComponents: [DialogComponent],
   providers: [UploadService],
   //exports: [UploadComponent]
+  exports: [DialogComponent]
 })
 export class UploadModule { }
