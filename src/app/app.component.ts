@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'starr';
+  isRowDirection: boolean = true;
+
+
+  toggleFlexDirection(){
+    this.isRowDirection = !this.isRowDirection;
+  }
 }
