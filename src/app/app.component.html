@@ -1,4 +1,6 @@
-<div class="container-1">
+<div class="container-1"
+     [ngStyle]="{'flex-direction': isRowDirection ? 'row' : 'column' }"
+>
 
 
   <div class="box-1 box-week">
@@ -17,11 +19,19 @@
   </div>
 
 
-
 </div>
 
-//TODO: add button making flex-direction: column/row
-<button class="button">Toggle list</button>
+<button (click)="toggleFlexDirection()"
+        class="button">
+  <span *ngIf="isRowDirection; else columnTextRef">
+    Column view
+  </span>
+
+  <ng-template #columnTextRef>
+    <span>Row view</span>
+  </ng-template>
+
+</button>
 
 
 <app-upload></app-upload>
