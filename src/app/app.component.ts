@@ -13,4 +13,6 @@ export class AppComponent {
   toggleFlexDirection(){
     this.isRowDirection = !this.isRowDirection;
   }
+
+
 }

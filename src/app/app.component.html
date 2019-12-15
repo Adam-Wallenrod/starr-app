@@ -1,15 +1,11 @@
 <div class="container">
-  <div>
+  <div class="jumbotron">
     <h1>Welcome</h1>
-    <h2>Angular & Bootstrap Demo</h2>
+    <h2>Starr App</h2>
   </div>
 
 </div>
 
-
-<div class="alert alert-primary" role="alert">
-  test
-</div>
 
 
 <div class="container-1"
@@ -36,7 +32,7 @@
 </div>
 
 <button (click)="toggleFlexDirection()"
-        class="button">
+        class="btn btn-primary toggle-flex-btn">
   <span *ngIf="isRowDirection; else columnTextRef">
     Column view
   </span>
@@ -49,3 +45,5 @@
 
 
 <app-upload></app-upload>
+
+<app-rating-input></app-rating-input>
