@@ -1,11 +1,8 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   forwardRef,
   HostBinding,
   Input,
-  OnInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -13,7 +10,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   selector: 'app-rating-input',
   templateUrl: './rating-input.component.html',
   styleUrls: ['./rating-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -25,12 +21,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 export class RatingInputComponent implements ControlValueAccessor {
 
 
+
   stars: boolean[] = Array(5).fill(false);
 
   @Input() disabled = false;
   @HostBinding('style.opacity')
   get opacity() {
-    return this.disable ? 0.25: 1;
+    return this.disabled ? 0.25: 1;
   }
 
   // Function to call when the rating changes
@@ -54,7 +51,7 @@ export class RatingInputComponent implements ControlValueAccessor {
   rate(rating: number) {
 
     if(!this.disabled){
-      this.writeValue(this.rating);
+      this.writeValue(rating);
     }
 
   }
